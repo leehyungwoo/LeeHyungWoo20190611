@@ -7,10 +7,10 @@ import lombok.Data;
  */
 @Data
 public class EmployDTO {
-    private String  employee_id,
+    private String  employeeId,
                     manager,
                     name,
-                    birth_date,
+                    birthDate,
                     photo,
                     notes;
 }

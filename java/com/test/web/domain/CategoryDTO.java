@@ -7,8 +7,8 @@ import lombok.Data;
  */
 @Data
 public class CategoryDTO {
-    private String category_id,
-                    category_name,
+    private String categoryId,
+                    categoryName,
                     description;
 }
 

@@ -6,9 +6,9 @@ import lombok.Data;
  * SHIPPERSDTO
  */
 @Data
-public class ShippersDTO {
-    private String shipper_id,
-                    shipper_name,
+public class ShipperDTO {
+    private String shipperId,
+                    shipperName,
                     phone;
     
 }
