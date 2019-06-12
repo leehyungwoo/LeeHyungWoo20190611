@@ -3,9 +3,9 @@ var app = (function(){
         login_form()
       }
       let login_form =function(){
-            let wrapper = document.querySelector("#wrapper");
-            wrapper.innerHTML='<form>'
-            +'  First name:<br>'
+         
+            let tag =
+            '  First name:<br>'
             +'  <input type="text" name="firstname" >'
             +'  <br>'
             +'  Last name:<br>'
@@ -13,19 +13,26 @@ var app = (function(){
             +'  <br><br>'
             +'  <button id="login" value="로그인">로그인</button>'
             +'  <button id="join" value="회원가입">회원가입</button>'
-            +'</form> '
+           
             ;
+            template(tag)
+            let login_btn = document.getElementById('login');
+            let join_btn = document.getElementById('join');
 
-            let join_btn = document.getElementById('join')
-            join_btn.addEventListener('click',function(){
-                 join_form();
+            login_btn.addEventListener('click',function(e){
+                e.preventDefault();
+               alert("로그인 여부");
+             })
+            join_btn.addEventListener('click',function(e){
+                e.preventDefault();
+                join_form();
              })
         }
 
     let join_form = function(){
-        let wrapper = document.querySelector("#wrapper");
-            wrapper.innerHTML='<form>'
-            +'  id:<br>'
+    
+            let tag=
+            '  id:<br>'
             +'  <input type="text" name="u_id" >'
             +'  <br>'
             +'  password:<br>'
@@ -41,11 +48,28 @@ var app = (function(){
             +'  <input type="text" name="phone" >'
             +'  <br>'
             +'  <br><br>'
-            +'  <button id="confirm" value="회원가입">확인</button>'
-            +'  <button id="cancel" value="취소">취소</button>'
-            +'</form> '
+            +'  <button id="confirm_btn" value="회원가입">확인</button>'
+            +'  <button id="cancel_btn" value="취소">취소</button>'
+            template(tag)
+            let confirm_btn =document.getElementById('confirm_btn');
+            let cancel_btn =document.getElementById('cancel_btn');
 
+            confirm_btn.addEventListener('click',function(e){
+                e.preventDefault();
+               alert("로그인 여부");
+             })
+            cancel_btn.addEventListener('click',function(e){
+                e.preventDefault();
+                login_form();
+            })
+           
     }
+
+    let template = function(tag){
+        let wrapper = document.querySelector("#wrapper");
+        wrapper.innerHTML='<form>'+tag+'</form>';
+    }
+
 
     return {init:init}; 
 })();
