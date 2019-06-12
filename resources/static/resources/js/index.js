@@ -1,21 +1,65 @@
-var myVariable = document.querySelector("#wrapper");
+var app = (function(){
+      let init = function(){
+        login_form()
+      }
+      let login_form =function(){
+            var wrapper = document.querySelector("#wrapper");
+            var loginFormTxt = '<form>' 
+            +'  First name:<br>'
+            +'  <input type="text" name="firstname" >'
+            +'  <br>'
+            +'  Last name:<br>'
+            +'  <input type="text" name="lastname" >'
+            +'  <br><br>'
+            +'  <button id="login" value="로그인">로그인</button>'
+            +'  <button id="signUp" value="회원가입">회원가입</button>'
+            +'</form> '
+            ;
+            
+            wrapper.innerHTML=loginFormTxt;
 
-wrapper.innerHTML=
-"<h1>SPA 시작</h1>"+
-"<div id='target'>삭제할내용</div>"+
-"<button id='btn'>지우자</button>"+
-"<button id='btn2'>추가하자</button>"
-;
+            var loginBtn = document.querySelector("#login");
+            var signUp = document.querySelector("#signUp");
+            loginBtn.addEventListener("click",function(){
+                alert("로그인 Y/N");
+            })
+    
+            signUp.addEventListener("click",function(){
 
-var btn = document.querySelector("#btn");
-var btn2 = document.querySelector("#btn2");
-var target = document.querySelector('#target');
+                wrapper.innerHTML='<form>'
+                +'  id:<br>'
+                +'  <input type="text" name="u_id" >'
+                +'  <br>'
+                +'  password:<br>'
+                +'  <input type="password" name="password" >'
+                +'  <br>'
+                +'  name:<br>'
+                +'  <input type="text" name="name" >'
+                +'  <br>'
+                +'  email:<br>'
+                +'  <input type="text" name="email" >'
+                +'  <br>'
+                +'  phone:<br>'
+                +'  <input type="text" name="phone" >'
+                +'  <br>'
+                +'  <br><br>'
+                +'  <button id="confirm" value="회원가입">확인</button>'
+                +'  <button id="cancel" value="취소">취소</button>'
+                +'</form> '
+                ;
+                var confirm = document.querySelector('#confirm');
+                var cancel =document.querySelector('#cancel');
 
-btn.addEventListener("click",function(){
-    target.innerHTML="";
-})
+                confirm.addEventListener('click',function(){
+                    wrapper.innerHTML=loginFormTxt;
+                })
+                cancel.addEventListener('click',function(){
+                    wrapper.innerHTML=loginFormTxt;
+                })
+            })
+    }
+    return {init:init}; 
+})();
 
-btn2.addEventListener("click",function(){
-    var temp = document.createTextNode("안녕");
-    target.appendChild(temp);
-})
+
+ 
