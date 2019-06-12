@@ -1,4 +1,7 @@
 var app = (function(){
+
+      let wrapper = document.querySelector("#wrapper");
+      
       let init = function(){
         login_form()
       }
@@ -13,7 +16,6 @@ var app = (function(){
             +'  <br><br>'
             +'  <button id="login" value="로그인">로그인</button>'
             +'  <button id="join" value="회원가입">회원가입</button>'
-           
             ;
             template(tag)
             let login_btn = document.getElementById('login');
@@ -56,17 +58,15 @@ var app = (function(){
 
             confirm_btn.addEventListener('click',function(e){
                 e.preventDefault();
-               alert("로그인 여부");
+                alert("회원가입 여부");
              })
             cancel_btn.addEventListener('click',function(e){
                 e.preventDefault();
                 login_form();
-            })
-           
+            })    
     }
 
     let template = function(tag){
-        let wrapper = document.querySelector("#wrapper");
         wrapper.innerHTML='<form>'+tag+'</form>';
     }
 
