@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.test.web.mapper.CustomerMapper">
+    <resultMap id="customerMap" type="com.test.web.domain.CustomerDTO">
+    <id property="customerId" column="CUSTOMER_ID" />
+    <result property="customerName" column="CUSTOMER_NAME"/>
+    <result property="password" column="PASSWORD"/>
+    <result property="ssn" column="SSN"/>
+    <result property="phone" column="PHONE"/>
+    <result property="city" column="CITY"/>
+    <result property="address" column="ADDRESS"/>
+    <result property="postalcode" column="POSTALCODE"/>
+    <result property="photo" column="PHOTO"/>
+    </resultMap>
+    <insert id="insertCustomer" parameterType="com.test.web.domain.CustomerDTO">
+        insert into CUSTOMERS (CUSTOMER_ID,CUSTOMER_NAME,PASSWORD,SSN,PHONE,CITY,ADDRESS,POSTALCODE,PHOTO)
+        values (#{customerId},#{customerName},#{password},#{ssn},#{phone},#{city},#{address},#{postalcode},#{photo};)
+    </insert>
+    <select id="selectCustomers" resultMap="customerMap">
+        select * from CUSTOMERS
+    </select>
+    <select id="selectCustomersByOption" resultMap="customerMap"
+                                        parameterType="com.test.web.domain.CustomerDTO">
+        select * from CUSTOMERS where CUSTOMER_NAME = #{customerName}
+    </select>
+    <select id="selectCustomerBycustomerId" resultMap="customerMap" 
+                                            parameterType="string">
+        select * from CUSTOMERS where CUSTOMER_ID = #{value}
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(*) as count from CUSTOMERS
+    </select>
+
+    <update
+    id="updateCustomer"
+    parameterType="com.test.web.domain.CustomerDTO">
+        update CUSTOMERS set
+            CUSTOMER_NAME=#{customerName},
+            PASSWORD=#{password},
+            SSN=#{ssn},
+            PHONE=#{phone},
+            CITY=#{city},
+            ADDRESS=#{address},
+            POSTALCODE=#{postalcode},
+            PHOTO=#{photo}
+        where CUSTOMER_ID = #{customerId}
+    </update>
+    <delete id="deleteCustomer" parameterType="com.test.web.domain.CustomerDTO">
+        delete from CUSTOMERS  where CUSTOMER_ID = #{customerId}
+    </delete>
+</mapper>

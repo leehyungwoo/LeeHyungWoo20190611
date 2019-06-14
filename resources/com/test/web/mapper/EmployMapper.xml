@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.test.web.mapper.EmployMapper">
+    <resultMap id="employMap" type="com.test.web.domain.EmployDTO">
+    <id property="employeeId" column="EMPLOYEE_ID" />
+    <result property="manager" column="MANAGER"/>
+    <result property="name" column="NAME"/>
+    <result property="birthDate" column="BIRTH_DATE"/>
+    <result property="photo" column="PHOTO"/>
+    <result property="notes" column="NOTES"/>
+    </resultMap>
+    <insert id="insertEmploy" parameterType="com.test.web.domain.EmployDTO">
+        insert into EMPLOYEES (EMPLOYEE_ID,MANAGER,NAME,BIRTH_DATE,PHOTO,NOTES)
+        values (#{employeeId},#{manager},#{name},#{birthDate},#{photo},#{notes})
+    </insert>
+    <select id="selectEmploys" resultMap="employMap">
+        select * from EMPLOYEES
+    </select>
+    <select id="selectEmploysByOption" resultMap="employMap"
+                                        parameterType="com.test.web.domain.EmployDTO">
+        select * from EMPLOYEES where MANAGER = #{manager}
+    </select>
+    <select id="selectEmployByemployId" resultMap="employMap" 
+                                            parameterType="string">
+        select * from EMPLOYEES where EMPLOYEE_ID = #{value}
+    </select>
+    <update
+    id="updateEmploy"
+    parameterType="com.test.web.domain.EmployDTO">
+        update EMPLOYEES set
+            MANAGER=#{manager},
+            NAME=#{name},
+            BIRTH_DATE=#{birthDate},
+            PHOTO=#{photo},
+            NOTES=#{notes}
+        where EMPLOYEE_ID = #{employeeId}
+    </update>
+    <delete id="deleteEmploy" parameterType="com.test.web.domain.EmployDTO">
+        delete from EMPLOYEES  where EMPLOYEE_ID = #{employeeId}
+    </delete>
+</mapper>

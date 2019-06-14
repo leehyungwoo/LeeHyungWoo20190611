@@ -1,15 +1,16 @@
 package com.test.web.domain;
 
 import lombok.Data;
-
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 /**
- * SHIPPERSDTO
+ * ShipperDTO
  */
-@Data
+
+@Data @Component @Lazy
 public class ShipperDTO {
+
     private String shipperId,
                     shipperName,
                     phone;
-    
 }
-
