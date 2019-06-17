@@ -25,13 +25,16 @@
     </select>
     <select id="selectCustomersByOption" resultMap="customerMap"
                                         parameterType="com.test.web.domain.CustomerDTO">
-        select * from CUSTOMERS where CUSTOMER_NAME = #{customerName}
+        select * from CUSTOMERS where CUSTOMER_NAME LIKE #{customerName}
     </select>
     <select id="selectCustomerBycustomerId" resultMap="customerMap" 
                                             parameterType="string">
-        select * from CUSTOMERS where CUSTOMER_ID = #{value}
+        select * from CUSTOMERS where CUSTOMER_ID LIKE #{value}
     </select>
-
+    <select id="login" resultMap="customerMap" 
+                                            parameterType="com.test.web.domain.CustomerDTO">
+        select * from CUSTOMERS where CUSTOMER_ID LIKE #{customerId} and PASSWORD LIKE #{password}
+    </select>
     <select id="selectCount" resultType="int">
         select count(*) as count from CUSTOMERS
     </select>

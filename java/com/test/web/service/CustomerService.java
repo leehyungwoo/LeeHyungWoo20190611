@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
     public CustomerDTO findCustomerBycustomerId(String customer);
     public void updateCustomer(CustomerDTO customer);
     public void deleteCustomer(CustomerDTO customer);
-	public int countAll();
+    public int countAll();
+    public CustomerDTO login(CustomerDTO customer);
 }
 
  
