@@ -68,27 +68,44 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}") //
-    public HashMap<String,Object> updateUser(@PathVariable("customerId") String id) {
+    public HashMap<String,Object> updateUser(@RequestBody CustomerDTO param) {
         System.out.println("======update mapping ========");
-        System.out.println("AJAX로 넘어온 ID : " + id);
-        customer.setCustomerId(id);
+        System.out.println("AJAX로 넘어온 ID : " + param.getCustomerId());
+        System.out.println("AJAX로 넘어온  : " + param.getCustomerName());
+        System.out.println("AJAX로 넘어온  : " + param.getPassword());
+        System.out.println("AJAX로 넘어온  : " + param.getSsn());
+        System.out.println("AJAX로 넘어온  : " + param.getPhone());
+        System.out.println("AJAX로 넘어온  : " + param.getCity());
+        System.out.println("AJAX로 넘어온  : " + param.getAddress());
+        System.out.println("AJAX로 넘어온  : " + param.getPostalcode());
         
+       
+        customer.setCustomerId(param.getCustomerId());
+        customer.setCustomerName(param.getCustomerName());
+        customer.setPassword(param.getPassword());
+        customer.setSsn(param.getSsn());
+        customer.setPhone(param.getPhone());
+        customer.setCity(param.getCity());
+        customer.setAddress(param.getAddress());
+        customer.setPostalcode(param.getPostalcode());
+
+        customerService.updateCustomer(customer);
         HashMap<String,Object> map = new HashMap<>();
         map.put("result","SUCESS");
         return map;
 
     }
 
-    @DeleteMapping("/{customerId}") //
-    public HashMap<String,Object> deleteUser(@PathVariable("customerId") String id) {
-        System.out.println("======delete mapping ========");
-        System.out.println("AJAX로 넘어온 ID : " + id);
-        customer.setCustomerId(id);
+    // @DeleteMapping("/{customerId}") //
+    // public HashMap<String,Object> deleteUser(@PathVariable("customerId") String id) {
+    //     System.out.println("======delete mapping ========");
+    //     System.out.println("AJAX로 넘어온 ID : " + id);
+    //     customer.setCustomerId(id);
 
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("result","SUCESS");
-        return map; 
-    }
+    //     HashMap<String,Object> map = new HashMap<>();
+    //     map.put("result","SUCESS");
+    //     return map; 
+    // }
 
     
 }
