@@ -19,10 +19,6 @@ public class CustomerServiceImpl implements CustomerService {
         customerMapper.insertCustomer(customer);
     }
 
-    @Override
-    public List<CustomerDTO> findCustomers() {
-        return null;
-    }
 
     @Override
     public List<CustomerDTO> findCustomersByOption(CustomerDTO customer) {
@@ -35,13 +31,21 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(CustomerDTO customer) {
-        customerMapper.updateCustomer(customer);
+    public int updateCustomer(CustomerDTO customer) {
+        //데이터 DML 여부판단
+        int res = customerMapper.updateCustomer(customer);
+        System.out.println("성공여부판단"+res);
+        if(res == 1){
+            System.out.println("서비스 customerMapper 수정성공 in customerServiceImpl");
+        }else{
+            System.out.println("서비스 customerMapper 수정실패 in customerServiceImpl");
+        }
+        return res;
     }
 
     @Override
     public void deleteCustomer(CustomerDTO customer) {
-
+        customerMapper.deleteCustomer(customer);
     }
 
     @Override
@@ -56,6 +60,11 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerMapper.login(customer);
     }
+
+	@Override
+	public List<CustomerDTO> findCustomers() {
+		return customerMapper.selectCustomers();
+	}
 
     
 

@@ -1,6 +1,5 @@
 package com.test.web;
 
-import java.io.IOException;
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

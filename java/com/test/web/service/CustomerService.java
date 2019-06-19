@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
     public List<CustomerDTO> findCustomers();
     public List<CustomerDTO> findCustomersByOption(CustomerDTO customer);
     public CustomerDTO findCustomerBycustomerId(String customer);
-    public void updateCustomer(CustomerDTO customer);
+    public int updateCustomer(CustomerDTO customer);
     public void deleteCustomer(CustomerDTO customer);
     public int countAll();
     public CustomerDTO login(CustomerDTO customer);

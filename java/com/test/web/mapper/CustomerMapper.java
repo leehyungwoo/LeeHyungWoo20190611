@@ -12,7 +12,7 @@ public interface CustomerMapper {
     public List<CustomerDTO> selectCustomers();
     public List<CustomerDTO> selectCustomersByOption(CustomerDTO customer);
     public CustomerDTO selectCustomerBycustomerId(String customer);
-    public void updateCustomer(CustomerDTO customer);
+    public int updateCustomer(CustomerDTO customer);
     public void deleteCustomer(CustomerDTO customer); 
     public int selectCount();
     public CustomerDTO login(CustomerDTO customer);

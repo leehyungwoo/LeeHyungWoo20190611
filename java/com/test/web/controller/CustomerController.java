@@ -1,6 +1,8 @@
 package com.test.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.test.web.domain.CustomerDTO;
 import com.test.web.service.CustomerService;
@@ -23,13 +25,13 @@ public class CustomerController {
     @Autowired CustomerService customerService;
     @Autowired CustomerDTO customer;
 
-    @RequestMapping("/count")
-    public String count() {
-        System.out.println("CustomerController count() 경로로 들어옴");
-        int count = customerService.countAll();
-        System.out.println("고객의 총인원 : " + count);
-        return count + "";
-    }
+    // @RequestMapping("/count")
+    // public String count() {
+    //     System.out.println("CustomerController count() 경로로 들어옴");
+    //     int count = customerService.countAll();
+    //     System.out.println("고객의 총인원 : " + count);
+    //     return count + "";
+    // }
 
     @PostMapping("")
     public HashMap<String,Object> join(@RequestBody CustomerDTO param) {
@@ -48,7 +50,22 @@ public class CustomerController {
         return map;
     }
     
-    @GetMapping("/{customerId}/{password}")
+    @GetMapping("/all") //전체가져오기
+    public List<CustomerDTO> list(){   //import util로
+        System.out.println("도착");
+        List<CustomerDTO> list = new ArrayList<>();
+        list = customerService.findCustomers();
+        for(CustomerDTO customer :list){
+            System.out.println(customer);
+            System.out.println("\n");
+        }
+        
+  
+        return list;
+    }
+
+
+    @GetMapping("/{customerId}/{password}") //유저
     public CustomerDTO login(@PathVariable("customerId") String id, 
                 @PathVariable("password") String pass){        
         System.out.println("AJAX로 넘어온 ID : " + id);
@@ -67,8 +84,9 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}") //
-    public String updateUser(@RequestBody CustomerDTO param) {
+    public CustomerDTO  updateUser(@RequestBody CustomerDTO param) {
         System.out.println("======update mapping ========");
+        System.out.println("수정 할 객체 : " + param.toString());
         System.out.println("AJAX로 넘어온 ID : " + param.getCustomerId());
         System.out.println("AJAX로 넘어온  : " + param.getCustomerName());
         System.out.println("AJAX로 넘어온  : " + param.getPassword());
@@ -87,24 +105,29 @@ public class CustomerController {
         customer.setAddress(param.getAddress());
         customer.setPostalcode(param.getPostalcode());
 
-        customerService.updateCustomer(customer);
-        
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("result","SUCESS");
-        return "redirect:/customers"+param.getCustomerId();
 
+        //데이터 DML 여부판단
+        int res = customerService.updateCustomer(param);
+            System.out.println("====>" + res);
+            if(res == 1){
+                customer = customerService.findCustomerBycustomerId(param.getCustomerId());
+            }else{
+                System.out.println("컨트롤러 수정 실패");
+            }
+            return customer;
     }
 
-    // @DeleteMapping("/{customerId}") //
-    // public HashMap<String,Object> deleteUser(@PathVariable("customerId") String id) {
-    //     System.out.println("======delete mapping ========");
-    //     System.out.println("AJAX로 넘어온 ID : " + id);
-    //     customer.setCustomerId(id);
+    @DeleteMapping("/{customerId}") //
+    public HashMap<String,Object> deleteUser(@PathVariable("customerId") String customerId) {
+        System.out.println("======delete mapping ========");
+        System.out.println("AJAX로 넘어온 ID : " + customerId);
 
-    //     HashMap<String,Object> map = new HashMap<>();
-    //     map.put("result","SUCESS");
-    //     return map; 
-    // }
+        HashMap<String,Object> map = new HashMap<>();
+        customer.setCustomerId(customerId);
+        customerService.deleteCustomer(customer);
+        map.put("result","SUCESS");
+        return map; 
+    }
 
     
 }
