@@ -58,17 +58,16 @@ public class CustomerController {
         return customerService.login(customer);  
     }
 
-   
     @GetMapping("/{customerId}")  //
-    public CustomerDTO selectUser(@PathVariable("customerId") String id ){
+    public CustomerDTO selectUser(@PathVariable("customerId") String customerId ){
         System.out.println("======select mapping ========");
-        System.out.println("AJAX로 넘어온 ID : " + id);
-        customer.setCustomerId(id);
-        return customerService.findCustomerBycustomerId(id);
+        System.out.println("AJAX로 넘어온 ID : " + customerId);
+        customer.setCustomerId(customerId);
+        return customerService.findCustomerBycustomerId(customerId);
     }
 
     @PutMapping("/{customerId}") //
-    public HashMap<String,Object> updateUser(@RequestBody CustomerDTO param) {
+    public String updateUser(@RequestBody CustomerDTO param) {
         System.out.println("======update mapping ========");
         System.out.println("AJAX로 넘어온 ID : " + param.getCustomerId());
         System.out.println("AJAX로 넘어온  : " + param.getCustomerName());
@@ -79,7 +78,6 @@ public class CustomerController {
         System.out.println("AJAX로 넘어온  : " + param.getAddress());
         System.out.println("AJAX로 넘어온  : " + param.getPostalcode());
         
-       
         customer.setCustomerId(param.getCustomerId());
         customer.setCustomerName(param.getCustomerName());
         customer.setPassword(param.getPassword());
@@ -90,9 +88,10 @@ public class CustomerController {
         customer.setPostalcode(param.getPostalcode());
 
         customerService.updateCustomer(customer);
+        
         HashMap<String,Object> map = new HashMap<>();
         map.put("result","SUCESS");
-        return map;
+        return "redirect:/customers"+param.getCustomerId();
 
     }
 

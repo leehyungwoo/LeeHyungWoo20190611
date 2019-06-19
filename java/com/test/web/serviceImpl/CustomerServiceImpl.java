@@ -46,7 +46,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public int countAll() {
-
 		return customerMapper.selectCount();
     }
 

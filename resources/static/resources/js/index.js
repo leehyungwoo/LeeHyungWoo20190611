@@ -11,13 +11,13 @@ var customer = {
     login:login,
     mypage:mypage,
     count:count,
+    update_form:update_form,
     update:update,
     // delete:remove
 }
 
-
 function login_form() {
-    return '<form action="/action_page.php">' +
+    return '<form>' +
         ' First name:<br>' +
         ' <input type="text" id="customerId" name="customerId">' +
         ' <br>' +
@@ -82,17 +82,7 @@ function init() {
 
 function join() {
     let xhr = new XMLHttpRequest()
-    let data = {
-        customerId: document.getElementById("customerId").value,
-        customerName: document.getElementById("customerName").value,
-        password: document.getElementById("password").value,
-        ssn: document.getElementById("ssn").value,
-        phone: document.getElementById("phone").value,
-        city: document.getElementById("city").value,
-        address: document.getElementById("address").value,
-        postalcode: document.getElementById("postalcode").value,
-    }
-
+    let data = inputValue();
 
     xhr.open('POST', 'customers', true);
     xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
@@ -123,35 +113,27 @@ function login(){
             let d = JSON.parse(xhr.responseText);
             if (d) {
                 alert('로그인성공')
-                $wrapper.innerHTML = customer.mypage(d);
-                document.getElementById("goToUpdateBtn").addEventListener('click',()=>{
-                    $wrapper.innerHTML = chagneInfo(d);
-                    document.getElementById("update").addEventListener('click',()=>{
-                        var data = {
-                            customerId:document.getElementById("customerId").value,
-                            customerName: document.getElementById("customerName").value,
-                            password: document.getElementById("password").value,
-                            ssn: document.getElementById("ssn").value,
-                            phone: document.getElementById("phone").value,
-                            city: document.getElementById("city").value,
-                            address: document.getElementById("address").value,
-                            postalcode: document.getElementById("postalcode").value,
-                        }
+                app.$wrapper.innerHTML = customer.mypage(d);
+                document.getElementById("goToUpdateBtn")
+                .addEventListener('click',()=>{
+                    app.$wrapper.innerHTML = update_form(d);
+                    document.getElementById("update")
+                    .addEventListener('click',()=>{
+                        var data = inputValue();
                         alert(document.getElementById("customerName").value)
-                        update(data)
+                        customer.update(data);
                     })
                 });
                 
             } else {
                 alert('로그인실패')
-                $wrapper.innerHTML = customer.login_form();
+                app.$wrapper.innerHTML = customer.login_form();
             }
         }else{
             alert('login ajax실패')
         }
     };
     xhr.send();
-
 }
 
 function count() {
@@ -160,17 +142,16 @@ function count() {
     xhr.onload = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             alert('성공');
-            let wrapper = document.querySelector('#wrapper');
-            wrapper.innerHTML = '총 고객수 : <h1>' + xhr.responseText + '</h1>'
+            app.$wrapper.innerHTML = '총 고객수 : <h1>' + xhr.responseText + '</h1>'
         }
     }
     xhr.send();
 }
 
 function mypage(x) {
-    
     alert('마이페이지로 넘어온 객체명 : '+x.customerId);
-    return '<span>Id '+x.customerId+'</span><br/>'
+    return '<h1>'+x.customerName+'마이페이지</h1>'
+    +'<span>Id '+x.customerId+'</span><br/>'
     +'<span>Name: ' +x.customerName+'</span><br/>'
     +'<span>Password: '+x.password+'</span><br/>'
     +'<span>Ssn: '+x.ssn+'</span><br/>'
@@ -179,11 +160,10 @@ function mypage(x) {
     +'<span>Address: '+x.address+'</span><br/>'
     +'<span>Postalcode: '+x.postalcode+'</span><br/>'
     +'<button id="goToUpdateBtn">업데이트하러가기</button>'
-
-    
+    +'<button id="goToDeleteBtn">탈퇴</button>'
 };
 
-function chagneInfo(x){ 
+function update_form(x){ 
     alert(x.customerId)
     var template = '<h1>수정페이지</h1>'
     +'<p>Id :' + '<input type="text" id="customerId" value="'+x.customerId+'"readonly>'+'</p>'
@@ -194,14 +174,12 @@ function chagneInfo(x){
     +'<p>City' + '<input type="text" id="city" value='+x.city+'>'+'</p>'
     +'<p>Address' + '<input type="text" id="address" value='+x.address+'>'+'</p>'
     +'<p>Postalcode' + '<input type="text" id="postalcode" value='+x.postalcode+'>'+'</p>'
-    +'<button id="update">수정하기</button>'
-
-    return template
-    
+    +'<button id="update">수정</button>'
+    +'<button id="cancel">취소</button>'
+    return template 
 }
 
-function changeData(x){
-    
+function inputValue(x){
     return {
         customerId:document.getElementById("customerId").value,
         customerName: document.getElementById("customerName").value,
@@ -214,10 +192,6 @@ function changeData(x){
     }
 }
 
-
-
-
-
 function update(data){
     alert(data)
     let xhr = new XMLHttpRequest();
@@ -226,8 +200,7 @@ function update(data){
     xhr.onload=()=>{
         if (xhr.readyState === 4 && xhr.status === 200) {
             alert('성공');
-            let wrapper = document.querySelector('#wrapper');
-            wrapper.innerHTML =login_form();
+            app.$wrapper.innerHTML =login_form();
         }
     };
     xhr.send(JSON.stringify(data));
